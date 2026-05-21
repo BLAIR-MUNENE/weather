@@ -5,64 +5,74 @@ const apiUrl =
 const searchBox = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button");
 const weatherIcon = document.querySelector(".weather-icon");
+const conditionPill = document.querySelector(".condition-pill");
+const galleryIcons = document.querySelectorAll(".weather-gallery img");
+
+const backgrounds = {
+  Clear: "#sunnyDay",
+  Clouds: "#cloudyDay",
+  Drizzle: "#drizzle",
+  Rain: "#rainyDay",
+  default: "#defult",
+};
+
+const conditionIcons = {
+  Clouds: "images/clouds.png",
+  Clear: "images/clear.png",
+  Rain: "images/rain.png",
+  Drizzle: "images/drizzle.png",
+  Mist: "images/mist.png",
+};
+
+function showBackground(condition) {
+  Object.values(backgrounds).forEach((selector) => {
+    document.querySelector(selector).style.display = "none";
+  });
+
+  const activeBg = backgrounds[condition] || backgrounds.default;
+  document.querySelector(activeBg).style.display = "block";
+}
+
+function setActiveConditionIcon(condition) {
+  galleryIcons.forEach((icon) => {
+    icon.classList.toggle("active", icon.dataset.condition === condition);
+  });
+}
 
 async function checkWeather(city) {
+  if (!city.trim()) return;
+
   const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
-
-  if ((response.status = 404)) {
-    document.querySelector(".error").style.display = "block";
-    document.querySelector(".weather").style.display = "none";
-  } else {
-    if (data.weather[0].main == "Clouds") {
-      weatherIcon.src = "images/clouds.png";
-    } else if (data.weather[0].main == "Clear") {
-      weatherIcon.src = "images/clear.png";
-    } else if (data.weather[0].main == "Rain") {
-      weatherIcon.src = "images/rain.png";
-    } else if (data.weather[0].main == "Drizzle") {
-      weatherIcon.src = "images/drizzle.png";
-    } else if (data.weather[0].main == "Mist") {
-      weatherIcon.src = "images/mist.png";
-    }
-  }
-
   const data = await response.json();
 
-  document.querySelector(".city").innerHTML = data.name;
-  document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
-  document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
-  document.querySelector(".wind").innerHTML =
-    Math.round(data.wind.speed) + "km/h";
-
-  if (data.weather[0].main == "Clouds") {
-    weatherIcon.src = "images/clouds.png";
-  } else if (data.weather[0].main == "Clear") {
-    weatherIcon.src = "images/clear.png";
-  } else if (data.weather[0].main == "Rain") {
-    weatherIcon.src = "images/rain.png";
-  } else if (data.weather[0].main == "Drizzle") {
-    weatherIcon.src = "images/drizzle.png";
-  } else if (data.weather[0].main == "Mist") {
-    weatherIcon.src = "images/mist.png";
-  }
-
-  if (data.weather[0].main == "Clear") {
-    document.querySelector("#sunnyDay").style.display = "block";
-  } else if (data.weather[0].main == "Clouds") {
-    document.querySelector("#cloudyDay").style.display = "block";
-  } else if (data.weather[0].main == "Drizzle") {
-    document.querySelector("#drizzle").style.display = "block";
-  } else if (data.weather[0].main == "Rain") {
-    document.querySelector("#rainyDay").style.display = "block";
+  if (response.status === 404 || data.cod === "404") {
+    document.querySelector(".error").style.display = "block";
+    document.querySelector(".weather").style.display = "none";
+    showBackground("default");
+    setActiveConditionIcon("");
   } else {
-    document.querySelector("#defult").style.display = "block";
-  }
+    document.querySelector(".city").innerHTML = data.name;
+    document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
+    document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+    document.querySelector(".wind").innerHTML = Math.round(data.wind.speed) + "km/h";
 
-  document.querySelector("#defult").style.display = "none";
-  document.querySelector(".weather").style.display = "block";
-  document.querySelector(".error").style.display = "none";
+    const condition = data.weather[0].main;
+    weatherIcon.src = conditionIcons[condition] || "images/clear.png";
+    conditionPill.innerHTML = condition;
+    showBackground(condition);
+    setActiveConditionIcon(condition);
+
+    document.querySelector(".weather").style.display = "block";
+    document.querySelector(".error").style.display = "none";
+  }
 }
 
 searchBtn.addEventListener("click", () => {
   checkWeather(searchBox.value);
+});
+
+searchBox.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    checkWeather(searchBox.value);
+  }
 });
