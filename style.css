@@ -1,3 +1,5 @@
+/* Weather App styles — dark neon look, responsive on phones and desktop */
+
 * {
   box-sizing: border-box;
 }
@@ -14,6 +16,8 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+/* Blurred photo layer behind everything */
 .back-ground {
   position: absolute;
   inset: 0;
@@ -29,6 +33,7 @@ body {
   object-fit: cover;
 }
 
+/* Header above the card */
 .title-wrap {
   margin-top: clamp(18px, 5vw, 48px);
   text-align: center;
@@ -51,6 +56,8 @@ body {
   letter-spacing: clamp(1px, 0.5vw, 3px);
   font-size: clamp(0.68rem, 1.8vw, 0.78rem);
 }
+
+/* Weather backgrounds start hidden; index.js shows the right one */
 #sunnyDay {
   display: none;
 }
@@ -63,6 +70,8 @@ body {
 #cloudyDay {
   display: none;
 }
+
+/* Frosted glass card in the center */
 .card {
   width: min(92vw, 480px);
   background: linear-gradient(145deg, rgba(22, 12, 39, 0.82), rgba(4, 67, 87, 0.58));
@@ -75,6 +84,7 @@ body {
   padding: clamp(18px, 5vw, 34px) clamp(14px, 4vw, 28px);
   text-align: center;
 }
+
 .search {
   width: 100%;
   display: flex;
@@ -124,6 +134,8 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 8px 18px rgba(249, 115, 22, 0.35);
 }
+
+/* Large condition icon under the search bar */
 .weather-icon {
   width: clamp(88px, 25vw, 148px);
   margin-top: clamp(14px, 4vw, 24px);
@@ -154,6 +166,8 @@ body {
   margin-top: -4px;
   color: #e2e8f0;
 }
+
+/* Humidity and wind sit side by side on wider screens */
 .details {
   display: flex;
   align-items: center;
@@ -188,6 +202,8 @@ body {
   margin: 0;
   font-weight: 600;
 }
+
+/* Hidden until JavaScript gets a successful API response */
 .weather {
   display: none;
 }
@@ -201,6 +217,7 @@ body {
   display: none;
 }
 
+/* Row of small condition icons — .active is toggled in index.js */
 .weather-gallery {
   margin-top: clamp(14px, 4vw, 20px);
   padding-top: clamp(10px, 3vw, 14px);
@@ -235,6 +252,7 @@ body {
   opacity: 1;
 }
 
+/* Stack humidity and wind vertically on small screens */
 @media (max-width: 600px) {
   .details {
     flex-direction: column;

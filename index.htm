@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>WeatherApp</title>
+    <!-- Google fonts for the title and body text -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rubik:wght@400;500;700&display=swap');
     </style>
@@ -14,30 +15,36 @@
 
 
 <body>
+    <!-- App title sits above the weather card -->
     <div class="title-wrap">
         <h1>
           Weather App
         </h1>
         <p>Forecast in Real Time</p>
     </div>
+
+    <!-- Full-page backgrounds — only one is visible at a time (controlled in index.js) -->
     <div class="back-ground">
         <img src="images/01 gettyimages-1172750442_resized.jpg" id="defult" width="100%" height="100%">
         <img src="images/sunnyWeather.jpeg" id="sunnyDay" width="100%" height="100%">
         <img src="images/rainweather.jpg" id="rainyDay" width="100%" height="100%">
         <img src="images/drizzleWeather.jpg" id="drizzle" width="100%" height="100%">
         <img src="images/cloudWeather2.jpg" id="cloudyDay" width="100%" height="100%">
-
-
-
     </div>
+
+    <!-- Main glass-style card: search, results, and condition icons -->
     <div class="card">
         <div class="search">
             <input type="text" placeholder="Tag a city..." spellcheck="false">
             <button>GO</button>
         </div>
+
+        <!-- Shown when the city name is wrong or the API returns an error -->
         <div class="error">
             <p>Invalid city name</p>
         </div>
+
+        <!-- Filled in by JavaScript after a successful search (hidden until then) -->
         <div class="weather">
             <img src="images/rain.png" class="weather-icon">
             <p class="condition-pill">Current vibes</p>
@@ -60,6 +67,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Icons for each condition; data-condition matches OpenWeather "main" values -->
             <div class="weather-gallery">
                 <img src="images/clear.png" data-condition="Clear" alt="Sunny weather icon">
                 <img src="images/clouds.png" data-condition="Clouds" alt="Cloudy weather icon">
@@ -69,7 +78,7 @@
             </div>
         </div>
 
-
+        <!-- config.js must load first so WEATHER_API_KEY exists before index.js runs -->
         <script src="config.js"></script>
         <script src="index.js"></script>
 </body>
