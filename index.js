@@ -1,6 +1,7 @@
-const apiKey = "9eb311dc3c3cb7b7221a91c7e2f08a77";
 const apiUrl =
   "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+const apiKey =
+  typeof WEATHER_API_KEY !== "undefined" ? WEATHER_API_KEY : "";
 
 const searchBox = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button");
@@ -41,6 +42,14 @@ function setActiveConditionIcon(condition) {
 
 async function checkWeather(city) {
   if (!city.trim()) return;
+
+  if (!apiKey || apiKey === "your_openweathermap_api_key_here") {
+    document.querySelector(".error p").textContent =
+      "Add your API key in config.js (copy from config.example.js)";
+    document.querySelector(".error").style.display = "block";
+    document.querySelector(".weather").style.display = "none";
+    return;
+  }
 
   const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
   const data = await response.json();

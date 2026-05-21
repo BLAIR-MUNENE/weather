@@ -14,12 +14,14 @@ No Node.js or build step is required.
 
 ## Get your API key working
 
-1. Open `index.js` in a text editor.
-2. Find the line near the top that sets `apiKey`.
-3. Replace the existing value with your own key from OpenWeatherMap.
-4. Save the file.
+1. Copy the example config file:
+   ```bash
+   cp config.example.js config.js
+   ```
+2. Open `config.js` and replace the placeholder with your OpenWeatherMap API key.
+3. Save the file. `config.js` is listed in `.gitignore` and will not be pushed to GitHub.
 
-Keep your key private. Do not commit a real production key to a public repo if you plan to share the project widely—use your own key locally, or move the key to environment-specific config later.
+Never commit your real API key. If a key was ever pushed to a public repo, **revoke it** in your [OpenWeatherMap account](https://home.openweathermap.org/api_keys) and create a new one.
 
 ## Run the app locally
 
@@ -64,11 +66,13 @@ Open the URL shown in the terminal (usually port 3000 or 5000) and go to `index.
 
 ```
 weatherApp/
-├── index.htm      # Page structure and weather card UI
-├── index.js       # Search, API call, and updating the display
-├── style.css      # Layout, colors, and responsive styling
-├── images/        # Icons and background photos
-└── README.md      # This file
+├── index.htm           # Page structure and weather card UI
+├── index.js            # Search, API call, and updating the display
+├── config.example.js   # Template for your API key (safe to commit)
+├── config.js           # Your real API key (create locally, not in Git)
+├── style.css           # Layout, colors, and responsive styling
+├── images/             # Icons and background photos
+└── README.md           # This file
 ```
 
 ## Supported weather types
